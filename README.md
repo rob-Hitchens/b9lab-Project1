@@ -1,7 +1,7 @@
 # b9lab-Project1
-#Project - Splitter
+# Project - Splitter
 
-##To run the application you should:
+## To run the application you should:
 1. run the command 
 > npm install
 2. run the testrpc by the command 
