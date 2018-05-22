@@ -3,7 +3,7 @@ pragma solidity ^0.4.4;
 import './Destroyable.sol';
 import './Stoppable.sol';
 
-contract Splitter is Destroyable,Stoppable {
+contract Splitter is Destroyable, Stoppable {
 
 
     address private ownerAddress;
