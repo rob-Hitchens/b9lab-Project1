@@ -1,14 +1,21 @@
 pragma solidity ^0.4.4;
 
 import './Destroyable.sol';
+import './Stoppable.sol';
 
-contract Splitter is Destroyable {
+contract Splitter is Destroyable,Stoppable {
 
 
     address private ownerAddress;
     address private secondAddress;
     address private thirdAddress;
     uint private amount;
+
+    event LogSendMoneyToFirstAcc(uint);
+    event LogSendMoneyToSecondAcc(uint);
+    event LogSendMoneyToThirdAcc(uint);
+    event LogCurrentAmount(uint);
+
 constructor(address address1,address address2, address address3)  {
 require(address1 != 0);
 require(address2 != 0);
@@ -19,13 +26,9 @@ secondAddress = address2;
 thirdAddress = address3;
 }
 
-function  getContractBalance () public view returns (uint) {
-return this.balance;
-}
 
-function getPersonBalance(address someAddr)public view returns (uint) {
-return someAddr.balance;
-}
+
+
 
 function getFirstAddrBal()public returns (uint){
 return ownerAddress.balance;
@@ -47,22 +50,23 @@ return secondAddress;
 function getThirdAddr()public returns (address){
 return thirdAddress;
 }
-event SendMoneyToFirstAcc(uint);
+
 function sendMoneyToFirstAcc(uint money)private returns (bool){
-ownerAddress.send(money);
-SendMoneyToFirstAcc(money);
+LogSendMoneyToFirstAcc(money);
+ownerAddress.transfer(money);
+
 return true;
 }
-event SendMoneyToSecondAcc(uint);
+
 function sendMoneyToSecAcc(uint money)private returns (bool){
-secondAddress.send(money);
-SendMoneyToSecondAcc(money);
+LogSendMoneyToSecondAcc(money);
+secondAddress.transfer(money);
 return true;
 }
-event SendMoneyToThirdAcc(uint);
+
 function sendMoneyToThirdAcc(uint money)private returns (bool){
-thirdAddress.send(money);
-SendMoneyToThirdAcc(money);
+LogSendMoneyToThirdAcc(money);
+thirdAddress.transfer(money);
 return true;
 }
 
@@ -79,9 +83,9 @@ Sum(tempSum);
 amount = tempSum / 2 ;
 return amount;
 }
-event LogCurrentAmount(uint amount);
 
-function split () public   returns (bool) {
+
+function split () onlyIfRunning public   returns (bool) {
 divideMoney(this.balance);
 LogCurrentAmount(amount);
 if (msg.sender == ownerAddress){
