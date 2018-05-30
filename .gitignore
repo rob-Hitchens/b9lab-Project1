@@ -9,3 +9,5 @@ out
 gen
 node_modules/
 build/
+/build/
+/node_modules/
