@@ -4,7 +4,7 @@ import "./Ownable.sol";
 
 contract Destroyable is Ownable {
 
-    function destroy() onlyOwner public {
-        selfdestruct(owner);
-    }
+  function destroy() onlyOwner public {
+    selfdestruct(owner);
+  }
 }

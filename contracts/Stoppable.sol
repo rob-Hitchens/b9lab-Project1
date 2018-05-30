@@ -3,19 +3,19 @@ pragma solidity ^0.4.4;
 import "./Ownable.sol";
 
 contract Stoppable is Ownable {
-    bool private stopped = false;
+  bool private stopped = false;
 
-    event LogStopContract(bool);
+  event LogStopContract(bool);
 
-    function stopContract() public onlyOwner onlyIfRunning returns (bool success) {
-        LogStopContract(true);
-        stopped = true;
-        return true;
-    }
-    modifier onlyIfRunning {
-        require(!stopped);
-        _;
-    }
+  function stopContract() public onlyOwner onlyIfRunning returns (bool success) {
+    LogStopContract(true);
+    stopped = true;
+    return true;
+  }
+  modifier onlyIfRunning {
+    require(!stopped);
+    _;
+  }
 
 
 }
