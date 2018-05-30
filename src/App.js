@@ -35,6 +35,7 @@ class App extends Component {
     }
 
     async getAccounts() {
+        console.log(userList)
         var firstAcc = await  this.getFirstAcc();
         var secAcc = await  this.getSecAcc();
         var thirdAcc = await  this.getThirdAcc();
@@ -49,7 +50,8 @@ class App extends Component {
 
 
     async updateBalance() {
-        this.setState({storageValue: await services.getContractBalance(contractInstance)});
+        console.log(contractInstance)
+        this.setState({storageValue: await services.getContractBalance(web3Instance,contractInstance)});
     }
 
     async handleSubmit(event) {
@@ -68,34 +70,37 @@ class App extends Component {
     }
 
     async getFirstAcc() {
-        var res = await  services.getFirstAddr(contractInstance, userList[0]);
+        console.log("get")
+        var res = await  services.getFirstAddr(contractInstance);
+        console.log(res)
         return res;
     }
 
     async getSecAcc() {
-        let res = await  services.getSecAcc(contractInstance, userList[0]);
+        let res = await  services.getSecAcc(contractInstance);
         return res;
     }
 
     async getThirdAcc() {
-        let res = await  services.getThirdAcc(contractInstance, userList[0]);
+        let res = await  services.getThirdAcc(contractInstance);
         return res;
     }
 
 
     async getFirstAccBalance() {
-       var res = await  services.getFirstAddrBal(contractInstance);
+
+       var res = await  services.getFirstAddrBal(contractInstance,web3Instance);
        alert("First Account balance is: " + res)
     }
 
     async getSecAccBalance() {
-        var res = await  services.getSecondAddrBal(contractInstance);
+        var res = await  services.getSecondAddrBal(contractInstance,web3Instance);
         alert("Second Account balance is: " + res)
 
     }
 
     async getThirdAccBalance() {
-        var res =  await  services.getThirdAddrBal(contractInstance);
+        var res =  await  services.getThirdAddrBal(contractInstance,web3Instance);
         alert("Third Account balance is:  " + res)
 
     }

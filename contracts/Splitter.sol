@@ -6,9 +6,9 @@ import './Stoppable.sol';
 contract Splitter is Destroyable, Stoppable {
 
 
-    address private ownerAddress;
-    address private secondAddress;
-    address private thirdAddress;
+    address public ownerAddress;
+    address public secondAddress;
+    address public thirdAddress;
     uint private amount;
 
     event LogSendMoneyToFirstAcc(uint);
@@ -24,31 +24,6 @@ require(address3 != 0);
 ownerAddress = address1;
 secondAddress = address2;
 thirdAddress = address3;
-}
-
-
-
-
-
-function getFirstAddrBal()public returns (uint){
-return ownerAddress.balance;
-}
-function getSecondAddrBal()public returns (uint){
-return secondAddress.balance;
-}
-function getThirdAddrBal()public returns (uint){
-return thirdAddress.balance;
-}
-
-
-function getFirstAddr()public returns (address){
-return ownerAddress;
-}
-function getSecondAddr()public returns (address){
-return secondAddress;
-}
-function getThirdAddr()public returns (address){
-return thirdAddress;
 }
 
 function sendMoneyToFirstAcc(uint money)private returns (bool){

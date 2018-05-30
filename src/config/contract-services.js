@@ -33,37 +33,43 @@ export const splitFunct = async (contractInstance, sender) => {
     contractInstance.split({from: sender, gas: 3500000});
 };
 //
-export const getContractBalance = async (contractInstance) => {
-    var balance = await contractInstance.getContractBalance();
+export const getContractBalance = async (_web3, contractInstance) => {
+    var balance = await _web3.eth.getBalance(contractInstance.address);
     return balance.toString();
 };
-export const getFirstAddr = async (contractInstance,sender) => {
-    var addr = await contractInstance.getFirstAddr({from: sender});
+export const getFirstAddr = async (contractInstance) => {
+    var addr = await contractInstance.ownerAddress.call();
     return addr;
 };
-export const getSecAcc = async (contractInstance,sender) => {
-    var addr = await contractInstance.getSecondAddr({from: sender});
+export const getSecAcc = async (contractInstance) => {
+    var addr = await contractInstance.secondAddress.call();
     return addr.toString();
 };
-export const getThirdAcc = async (contractInstance,sender) => {
-    var addr = await contractInstance.getThirdAddr({from: sender});
+export const getThirdAcc = async (contractInstance) => {
+    var addr = await  contractInstance.thirdAddress.call();
     return addr.toString();
 };
-export const getFirstAddrBal = async (contractInstance) => {
-    var res = await contractInstance.getFirstAddrBal.call();
-  return res.toString();
-};
-export const getSecondAddrBal = async (contractInstance) => {
-    var res = await contractInstance.getSecondAddrBal.call();
+export const getFirstAddrBal = async (contractInstance, _web3) => {
+    let addr = await contractInstance.ownerAddress.call()
+    var res = await _web3.eth.getBalance(addr);
+    console.log(res)
     return res.toString();
 };
-export const getThirdAddrBal= async (contractInstance) => {
-    var res = await contractInstance.getThirdAddrBal.call();
-    return res.toString();};
+export const getSecondAddrBal = async (contractInstance, _web3) => {
+    let addr = await contractInstance.secondAddress.call();
+    console.log(addr)
+    var res = await _web3.eth.getBalance(addr);
+    return res.toString();
+};
+export const getThirdAddrBal = async (contractInstance, _web3) => {
+    let addr =await contractInstance.thirdAddress.call()
+    var res = await _web3.eth.getBalance(addr);
+    return res.toString();
+};
 
 
-export const destroyContract = async (contractInstance,sender) => {
-    await contractInstance.destroy({from:sender });
+export const destroyContract = async (contractInstance, sender) => {
+    await contractInstance.destroy({from: sender});
 
 };
 
